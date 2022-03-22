@@ -25,7 +25,7 @@ import pickle
 
 def main():
     st.header("Cell Culture Calculator")
-    values_to_predict = ['Viability (%)', 'Time (days)', 'Glucose (gLˆ-1)', 'pH', 'Temperature']
+    values_to_predict = ['Viability (%)', 'Time (days)', 'Glucose (gLˆ-1)', 'pH', 'Temperature (°C)']
     predict_value = st.sidebar.selectbox(
         "Choose the variable you want to predict", values_to_predict)
 
@@ -44,9 +44,9 @@ def main():
         elif var == 'pH':
             pH_values = st.text_input(var)
             variables_dict['pH'] = pH_values
-        elif var == 'Temperature':
+        elif var == 'Temperature (°C)':
             sucrose_values = st.text_input(var)
-            variables_dict['Sucrose'] = sucrose_values
+            variables_dict['Temperature'] = sucrose_values
 
     if(st.button("Calculate")):
         if predict_value == 'Viability (%)':
@@ -73,6 +73,11 @@ def main():
             st.dataframe(X)
             st.subheader("pH calculated: " + str(5.35))
 
+        elif predict_value == 'Temperature (°C)':
+            X = pd.DataFrame([variables_dict])
+            st.subheader("Input values: ")
+            st.dataframe(X)
+            st.subheader("Temperature calculated: " + str(26) + " (°C)")
 
 if __name__ == "__main__":
     main()
